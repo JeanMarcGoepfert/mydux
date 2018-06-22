@@ -1,0 +1,17 @@
+{
+  "name": "my-dux",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon myDux.js",
+    "test": "mocha myDux.test.js -w"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.17.5"
+  }
+}
