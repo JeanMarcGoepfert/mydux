@@ -1,7 +1,7 @@
 const sinonChai = require('sinon-chai')
 const sinon = require('sinon')
 const chai = require('chai')
-const { createStore } = require('./myDux.js')
+const { createStore, applyMiddlewares } = require('./myDux.js')
 
 chai.use(sinonChai);
 const { expect } = chai
@@ -45,5 +45,23 @@ describe('createStore', () => {
 
       expect(subscription).to.have.been.called
     })
+  })
+})
+
+describe('applyMiddlewares', () => {
+  it('should call middleware when an event is dispatched', () => {
+    const reducer = (state, action) => ({ value: action.value })
+    const middlewareSpy = sinon.spy()
+    const middlewareFunction = store => next => action => {
+      middlewareSpy()
+      return next(action)
+    }
+    const subscription = sinon.spy()
+    const store = createStore(reducer, {}, applyMiddlewares(middlewareFunction))
+
+    store.subscribe(subscription)
+    store.dispatch({ type: 'EVENT' })
+
+    expect(middlewareSpy).to.have.been.called
   })
 })
